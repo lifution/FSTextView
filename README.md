@@ -9,11 +9,11 @@ textView.placeholder = @"这是一个继承于UITextView的带Placeholder的自�
 textView.maxLength = 10;
 // 添加输入改变Block回调.
 [textView addTextDidChangeHandler:^(FSTextView *textView) {
-    // 文本改变
+    // 文本改变后的相应操作.
 }];
 // 添加到达最大限制Block回调.
 [textView addTextLengthDidMaxHandler:^(FSTextView *textView) {
-    // 达到最大限制数
+    // 达到最大限制数后的相应操作.
 }];
 ```
 <p>
