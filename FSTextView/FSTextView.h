@@ -26,14 +26,14 @@ typedef void(^FSTextViewHandler)(FSTextView *textView);
 - (void)addTextLengthDidMaxHandler:(FSTextViewHandler)maxHandler;
 
 
-@property (nonatomic, assign) NSUInteger maxLength; ///< 最大限制文本长度, 默认为无穷大(即不限制).
+@property (nonatomic, assign) IBInspectable NSUInteger maxLength; ///< 最大限制文本长度, 默认为无穷大(即不限制).
 
-@property (nonatomic, assign) CGFloat    cornerRadius; ///< 圆角半径.
-@property (nonatomic, assign) CGFloat    borderWidth; ///< 边框宽度.
-@property (nonatomic, strong) UIColor   *borderColor; ///< 边框颜色.
+@property (nonatomic, assign) IBInspectable CGFloat    cornerRadius; ///< 圆角半径.
+@property (nonatomic, assign) IBInspectable CGFloat    borderWidth; ///< 边框宽度.
+@property (nonatomic, strong) IBInspectable UIColor   *borderColor; ///< 边框颜色.
 
-@property (nonatomic, copy)   NSString  *placeholder; ///< placeholder, 会自适应TextView宽高以及横竖屏切换, 字体默认和TextView一致.
-@property (nonatomic, strong) UIColor   *placeholderColor; ///< placeholder文本颜色, 默认为#C7C7CD.
-@property (nonatomic, strong) UIFont    *placeholderFont; ///< placeholder文本字体, 默认为UITextView的默认字体.
+@property (nonatomic, copy)   IBInspectable NSString *placeholder; ///< placeholder, 会自适应TextView宽高以及横竖屏切换, 字体默认和TextView一致.
+@property (nonatomic, strong) IBInspectable UIColor  *placeholderColor; ///< placeholder文本颜色, 默认为#C7C7CD.
+@property (nonatomic, strong) IBInspectable UIFont   *placeholderFont; ///< placeholder文本字体, 默认为UITextView的默认字体.
 
 @end
