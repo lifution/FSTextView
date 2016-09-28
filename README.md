@@ -4,7 +4,6 @@
 ```objc 
 FSTextView *textView = [FSTextView textView];
 textView.placeholder = @"这是一个继承于UITextView的带Placeholder的自定义TextView, 可以设定限制字符长度, 以Block形式回调, 简单直观 !";
-[SuperView addSubview:textView];
 // 限制输入最大字符数.
 textView.maxLength = 10;
 // 添加输入改变Block回调.
