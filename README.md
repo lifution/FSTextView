@@ -1,5 +1,12 @@
 # FSTextView
 继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换, 最低支持iOS6.<p>
+2016/10/25 更新 <p>
+支持使用CocoaPods引入
+##### Podfile文件中添加
+```ruby
+pod 'FSTextView'
+```
+注: 使用CocoaPods引入的话, 纯代码创建没有任何问题, 但在Storyboard中设置时会提示 `Fail to update auto layout status: Fail to load designables from path (null)`解决办法是在Podfile文件中添加`use_frameworks!`在`target 'YourProjectName' do`前即可, 但这个方法只能是iOS8及往后版本才行, 如果你的项目版本支持的是iOS7及之前版本的话会报错, 或者你可以找到`Pod`文件夹中`FSTextView`的源码, 删除`FSTextView.h`中的`IB_DESIGNABLE`字段（删除后就没有了Storyboard中`FSTextView`的相关属性即设置即显示的效果）.<p>
 基本使用方法:<p>
 ```objc 
 FSTextView *textView = [FSTextView textView];
@@ -20,7 +27,8 @@ textView.maxLength = 10;
 ![Alt text][image-1]<p>
 横屏状态<p>
 ![Alt text][image-2]<p>
-
+# LICENSE
+FSTextView is available under the MIT license. See the LICENSE file for more info.
 
 [image-1]:https://github.com/lifution/TestImages/blob/master/FSTextView/FSTextView1.png
 [image-2]:https://github.com/lifution/TestImages/blob/master/FSTextView/FSTextView2.png
