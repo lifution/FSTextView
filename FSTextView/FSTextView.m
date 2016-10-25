@@ -8,7 +8,7 @@
 
 #import "FSTextView.h"
 
-CGFloat const kFSTextViewPlaceholderVerticalMargin  = 8.0; ///< placeholder垂直方向边距
+CGFloat const kFSTextViewPlaceholderVerticalMargin = 8.0; ///< placeholder垂直方向边距
 CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水平方向边距
 
 @interface FSTextView ()
@@ -49,17 +49,18 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     // 监听文本变化
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextViewTextDidChangeNotification object:nil];
     
-    // 基本配置
-    _maxLength = NSUIntegerMax;
-    _placeholderColor = [UIColor colorWithRed:0.780 green:0.780 blue:0.804 alpha:1.000];
+    // 基本配置 (需判断是否在Storyboard中设置了值)
+    if (_maxLength == 0 || _maxLength == NSNotFound) _maxLength = NSUIntegerMax;
+    if (!_placeholderColor) _placeholderColor = [UIColor colorWithRed:0.780 green:0.780 blue:0.804 alpha:1.000];
     
-    // 基本设定
-    self.backgroundColor = [UIColor whiteColor];
-    self.font = [UIFont systemFontOfSize:15.f];
+    // 基本设定 (需判断是否在Storyboard中设置了值)
+    if (!self.backgroundColor) self.backgroundColor = [UIColor whiteColor];
+    if (!self.font) self.font = [UIFont systemFontOfSize:15.f];
     
     // placeholderLabel
     UILabel *placeholderLabel = [[UILabel alloc] init];
     placeholderLabel.font = self.font;
+    placeholderLabel.text = _placeholder ? : @""; // 可能在Storyboard中设置了Placeholder
     placeholderLabel.textColor = _placeholderColor;
     placeholderLabel.numberOfLines = 0;
     placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -132,10 +133,15 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 - (void)setPlaceholder:(NSString *)placeholder {
     if (!placeholder) return;
-    _placeholder = placeholder;
+    _placeholder = [placeholder copy];
     if (_placeholder.length > 0) {
         _placeholderLabel.text = _placeholder;
     }
+}
+- (void)setPlaceholderColor:(UIColor *)placeholderColor {
+    if (!placeholderColor) return;
+    _placeholderColor = placeholderColor;
+    _placeholderLabel.textColor = _placeholderColor;
 }
 - (void)setPlaceholderFont:(UIFont *)placeholderFont {
     if (!placeholderFont) return;
@@ -155,7 +161,7 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
         }
     }
     
-    if (_maxLength != NSUIntegerMax) { // 只有当maxLength字段的值不为无穷大整型时才计算限制字符数.
+    if (_maxLength != NSUIntegerMax && _maxLength != 0) { // 只有当maxLength字段的值不为无穷大整型也不为0时才计算限制字符数.
         NSString    *toBeString    = self.text;
         UITextRange *selectedRange = [self markedTextRange];
         UITextPosition *position   = [self positionFromPosition:selectedRange.start offset:0];
