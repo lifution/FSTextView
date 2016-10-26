@@ -27,6 +27,8 @@ textView.maxLength = 10;
 ![Alt text][image-1]<p>
 横屏状态<p>
 ![Alt text][image-2]<p>
+####目前已知的小问题: (不影响使用)
+在Storyboard中设置Placeholder颜色不会在Storyboard上马上呈现, 但是其实已经修改成功的了, 运行时Placeholder的颜色会是你所设置的颜色.<p>
 # LICENSE
 FSTextView is available under the MIT license. See the LICENSE file for more info.
 
