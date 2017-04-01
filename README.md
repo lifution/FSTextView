@@ -32,5 +32,7 @@ textView.maxLength = 10;
 # LICENSE
 FSTextView is available under the MIT license. See the LICENSE file for more info.
 
-[image-1]:https://github.com/lifution/TestImages/blob/master/FSTextView/FSTextView1.png
-[image-2]:https://github.com/lifution/TestImages/blob/master/FSTextView/FSTextView2.png
+[image-1]:http://oeysrv69b.bkt.clouddn.com/FSTextView1.jpg
+[image-2]:http://oeysrv69b.bkt.clouddn.com/FSTextView2.jpg
+
+
