@@ -28,6 +28,7 @@ textView.maxLength = 10;
 
 竖屏状态<p>
 ![Alt text][image-1]
+
 横屏状态<p>
 ![Alt text][image-2]
 
