@@ -4,7 +4,7 @@
 支持使用CocoaPods引入
 ##### Podfile文件中添加
 
-```ruby
+```objc
 pod 'FSTextView'
 ```
 
@@ -26,12 +26,12 @@ textView.maxLength = 10;
 }];
 ```
 
-竖屏状态
+竖屏状态<p>
 ![Alt text][image-1]
-横屏状态
+横屏状态<p>
 ![Alt text][image-2]
 
-####目前已知的小问题: (不影响使用)
+##### 目前已知的小问题: (不影响使用)
 在Storyboard中设置Placeholder颜色不会在Storyboard上马上呈现, 但是其实已经修改成功的了, 运行时Placeholder的颜色会是你所设置的颜色.<p>
 
 # LICENSE
