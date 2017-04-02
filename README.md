@@ -1,6 +1,6 @@
 # FSTextView
 继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换, 最低支持iOS6.<p>
-2016/04/02 更新 <p>
+2017/04/02 更新 <p>
 更换注册通知的方式, 避免影响其它的 `FSTextView`.
 
 2016/10/25 更新 <p>
@@ -35,7 +35,7 @@ textView.maxLength = 10;
 横屏状态<p>
 ![Alt text][image-2]
 
-##### 目前已知的小问题: (不影响使用, 貌似Xcode8.3修复了这个问题)
+##### 目前已知的小问题: (不影响使用, Xcode8.3 已修复了这个问题)
 在Storyboard中设置Placeholder颜色不会在Storyboard上马上呈现, 但是其实已经修改成功的了, 运行时Placeholder的颜色会是你所设置的颜色.<p>
 
 # LICENSE
