@@ -25,7 +25,7 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending) {
         [self layoutIfNeeded];
     }
     [self initialize];
@@ -37,6 +37,22 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     return self;
 }
 
+- (BOOL)becomeFirstResponder {
+    BOOL become = [super becomeFirstResponder];
+    // 成为第一响应者时注册通知监听文本变化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextViewTextDidChangeNotification object:nil];
+    
+    return become;
+}
+
+- (BOOL)resignFirstResponder {
+    BOOL resign = [super resignFirstResponder];
+    // 注销第一响应者时移除文本变化的通知, 以免影响其它的`UITextView`对象.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+    
+    return resign;
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _changeHandler = NULL;
@@ -46,9 +62,6 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 #pragma mark - Private
 
 - (void)initialize {
-    // 监听文本变化
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextViewTextDidChangeNotification object:nil];
-    
     // 基本配置 (需判断是否在Storyboard中设置了值)
     if (_maxLength == 0 || _maxLength == NSNotFound) _maxLength = NSUIntegerMax;
     if (!_placeholderColor) _placeholderColor = [UIColor colorWithRed:0.780 green:0.780 blue:0.804 alpha:1.000];
@@ -111,6 +124,9 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 - (void)setText:(NSString *)text {
     [super setText:text];
     _placeholderLabel.hidden = [@(text.length) boolValue];
+    // 手动模拟触发通知
+    NSNotification *notification = [NSNotification notificationWithName:UITextViewTextDidChangeNotification object:self];
+    [self textDidChange:notification];
 }
 - (void)setFont:(UIFont *)font {
     [super setFont:font];
@@ -151,6 +167,9 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 #pragma mark - NSNotification
 - (void)textDidChange:(NSNotification *)notification {
+    // 当前编辑的不是当前`TextView`的话直接返回
+    if (notification.object != self) return;
+    
     // 根据字符数量显示或者隐藏placeholderLabel
     _placeholderLabel.hidden = [@(self.text.length) boolValue];
     
