@@ -2,6 +2,13 @@
 继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换, 最低支持iOS6.<p>
 ###### 2017/04/14 更新 `version 1.2`: <p>
 修复 [#issue5](https://github.com/lifution/FSTextView/issues/5)<p>
+删除了父类属性 `text` 的 `getter` 方法, 如果需要获取一个去除首位空格和换行符的字符串则调用 `formarText` 即可. <p>
+
+```objc
+FSTextView *textView = [FSTextView textView];
+textView.formatText; // 该属性获取到的字符串为去除首位空格和换行符的.
+```
+
 ###### 2017/04/02 更新 `version 1.1`: <p>
 更换注册通知的方式, 避免影响其它的 `FSTextView` 实例.
 
