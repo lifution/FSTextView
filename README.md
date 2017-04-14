@@ -1,7 +1,7 @@
 # FSTextView
 继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换, 最低支持iOS6.<p>
 2017/04/14 更新 `version 1.2`: <p>
-修复 [#issue5](https://github.com/lifution/FSTextView/issues/5)
+修复 [#issue5](https://github.com/lifution/FSTextView/issues/5)<p>
 2017/04/02 更新 `version 1.1`: <p>
 更换注册通知的方式, 避免影响其它的 `FSTextView` 实例.
 
