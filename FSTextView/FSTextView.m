@@ -113,10 +113,9 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 
 #pragma mark - Getter
-// SuperGetter
-- (NSString *)text {
-    NSString *currentText = [super text];
-    return [currentText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]; // 去除首尾的空格和换行.
+/// 返回一个经过处理的 `self.text` 的值, 去除了首位的空格和换行.
+- (NSString *)formatText {
+    return [[super text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]; // 去除首尾的空格和换行.
 }
 
 #pragma mark - Setter
@@ -167,10 +166,10 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 #pragma mark - NSNotification
 - (void)textDidChange:(NSNotification *)notification {
-    // 当前编辑的不是当前`TextView`的话直接返回
+    // 通知回调的实例的不是当前实例的话直接返回
     if (notification.object != self) return;
     
-    // 根据字符数量显示或者隐藏placeholderLabel
+    // 根据字符数量显示或者隐藏 `placeholderLabel`
     _placeholderLabel.hidden = [@(self.text.length) boolValue];
     
     // 禁止第一个字符输入空格或者换行
@@ -181,35 +180,31 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     }
     
     if (_maxLength != NSUIntegerMax && _maxLength != 0) { // 只有当maxLength字段的值不为无穷大整型也不为0时才计算限制字符数.
-        NSString    *toBeString    = self.text;
+        NSString *toBeString = self.text;
         UITextRange *selectedRange = [self markedTextRange];
-        UITextPosition *position   = [self positionFromPosition:selectedRange.start offset:0];
+        UITextPosition *position = [self positionFromPosition:selectedRange.start offset:0];
         if (!position) {
             if (toBeString.length > _maxLength) {
+                _maxHandler ? _maxHandler(self) : NULL; // 回调达到最大限制的Block.
                 self.text = [toBeString substringToIndex:_maxLength]; // 截取最大限制字符数.
-                _maxHandler?_maxHandler(self):NULL; // 回调达到最大限制的Block.
             }
         }
     }
     
     // 回调文本改变的Block.
-    _changeHandler?_changeHandler(self):NULL;
+    _changeHandler ? _changeHandler(self) : NULL;
 }
 
 #pragma mark - Public
 
-/*! @brief 便利构造器创建FSTextView实例.
- */
 + (instancetype)textView {
     return [[self alloc] init];
 }
 
-/*! @brief 设定文本改变Block回调. (切记弱化引用, 以免造成内存泄露.) */
 - (void)addTextDidChangeHandler:(FSTextViewHandler)changeHandler{
     _changeHandler = [changeHandler copy];
 }
 
-/*! @brief 设定达到最大长度Block回调. (切记弱化引用, 以免造成内存泄露.) */
 - (void)addTextLengthDidMaxHandler:(FSTextViewHandler)maxHandler {
     _maxHandler = [maxHandler copy];
 }
