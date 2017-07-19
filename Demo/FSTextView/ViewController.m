@@ -30,6 +30,7 @@
     textView.borderWidth = 1.f;
     textView.borderColor = UIColor.lightGrayColor;
     textView.cornerRadius = 5.f;
+    textView.canPerformAction = NO;
     [self.view addSubview:textView];
     // 限制输入最大字符数.
     textView.maxLength = 10;

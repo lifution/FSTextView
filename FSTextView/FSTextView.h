@@ -37,6 +37,9 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor  *placeholderColor; ///< placeholder文本颜色, 默认为#C7C7CD.
 @property (nonatomic, strong) UIFont *placeholderFont; ///< placeholder文本字体, 默认为UITextView的默认字体.
 
+/// 是否允许长按弹出UIMenuController, 默认为YES.
+@property (nonatomic, assign, getter=isCanPerformAction) BOOL canPerformAction;
+
 /// 该属性返回一个经过处理的 `self.text` 的值, 去除了首位的空格和换行.
 @property (nonatomic, readonly) NSString *formatText;
 

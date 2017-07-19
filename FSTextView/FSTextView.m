@@ -23,15 +23,16 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 #pragma mark - Super Methods
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (!(self = [super initWithCoder:aDecoder])) return nil;
     if ([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending) {
         [self layoutIfNeeded];
     }
     [self initialize];
+    return self;
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     if (!(self = [super initWithFrame:frame])) return nil;
     [self initialize];
     return self;
@@ -53,6 +54,12 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     return resign;
 }
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    BOOL result = [super canPerformAction:action withSender:sender];
+    result = _canPerformAction;
+    return result;
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _changeHandler = NULL;
@@ -63,6 +70,7 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 - (void)initialize {
     // 基本配置 (需判断是否在Storyboard中设置了值)
+    _canPerformAction = YES;
     if (_maxLength == 0 || _maxLength == NSNotFound) _maxLength = NSUIntegerMax;
     if (!_placeholderColor) _placeholderColor = [UIColor colorWithRed:0.780 green:0.780 blue:0.804 alpha:1.000];
     
