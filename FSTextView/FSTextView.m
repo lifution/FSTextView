@@ -15,7 +15,7 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
 
 @property (nonatomic, copy) FSTextViewHandler changeHandler; ///< 文本改变Block
 @property (nonatomic, copy) FSTextViewHandler maxHandler; ///< 达到最大限制字符数Block
-@property (nonatomic, weak) UILabel *placeholderLabel; ///< placeholderLabel
+@property (nonatomic, strong) UILabel *placeholderLabel; ///< placeholderLabel
 
 @end
 
@@ -71,38 +71,34 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     if (!self.font) self.font = [UIFont systemFontOfSize:15.f];
     
     // placeholderLabel
-    UILabel *placeholderLabel = [[UILabel alloc] init];
-    placeholderLabel.font = self.font;
-    placeholderLabel.text = _placeholder ? : @""; // 可能在Storyboard中设置了Placeholder
-    placeholderLabel.textColor = _placeholderColor;
-    placeholderLabel.numberOfLines = 0;
-    placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:placeholderLabel];
-    _placeholderLabel = placeholderLabel;
+    self.placeholderLabel.font = self.font;
+    self.placeholderLabel.text = _placeholder; // 可能在Storyboard中设置了Placeholder
+    self.placeholderLabel.textColor = _placeholderColor;
+    [self addSubview:self.placeholderLabel];
     
     // constraint
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:placeholderLabel
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.placeholderLabel
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1.0
                                                       constant:kFSTextViewPlaceholderVerticalMargin]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:placeholderLabel
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.placeholderLabel
                                                      attribute:NSLayoutAttributeLeft
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self
                                                      attribute:NSLayoutAttributeLeft
                                                     multiplier:1.0
                                                       constant:kFSTextViewPlaceholderHorizontalMargin]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:placeholderLabel
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.placeholderLabel
                                                      attribute:NSLayoutAttributeWidth
                                                      relatedBy:NSLayoutRelationLessThanOrEqual
                                                         toItem:self
                                                      attribute:NSLayoutAttributeWidth
                                                     multiplier:1.0
                                                       constant:-kFSTextViewPlaceholderHorizontalMargin*2]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:placeholderLabel
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.placeholderLabel
                                                      attribute:NSLayoutAttributeHeight
                                                      relatedBy:NSLayoutRelationLessThanOrEqual
                                                         toItem:self
@@ -111,36 +107,53 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
                                                       constant:-kFSTextViewPlaceholderVerticalMargin*2]];
 }
 
-
 #pragma mark - Getter
 /// 返回一个经过处理的 `self.text` 的值, 去除了首位的空格和换行.
 - (NSString *)formatText {
     return [[super text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]; // 去除首尾的空格和换行.
 }
 
+- (UILabel *)placeholderLabel {
+    if (!_placeholderLabel) {
+        _placeholderLabel = [[UILabel alloc] init];
+        _placeholderLabel.numberOfLines = 0;
+        _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    }
+    
+    return _placeholderLabel;
+}
+
 #pragma mark - Setter
-// SuperStter
+
 - (void)setText:(NSString *)text {
     [super setText:text];
-    _placeholderLabel.hidden = [@(text.length) boolValue];
+    self.placeholderLabel.hidden = [@(text.length) boolValue];
     // 手动模拟触发通知
     NSNotification *notification = [NSNotification notificationWithName:UITextViewTextDidChangeNotification object:self];
     [self textDidChange:notification];
 }
+
 - (void)setFont:(UIFont *)font {
     [super setFont:font];
-    _placeholderLabel.font = font;
+    self.placeholderLabel.font = font;
+}
+
+- (void)setMaxLength:(NSUInteger)maxLength {
+    _maxLength = fmax(0, maxLength);
+    self.text = self.text;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
     _cornerRadius = cornerRadius;
     self.layer.cornerRadius = _cornerRadius;
 }
+
 - (void)setBorderColor:(UIColor *)borderColor {
     if (!borderColor) return;
     _borderColor = borderColor;
     self.layer.borderColor = _borderColor.CGColor;
 }
+
 - (void)setBorderWidth:(CGFloat)borderWidth {
     _borderWidth = borderWidth;
     self.layer.borderWidth = _borderWidth;
@@ -150,18 +163,20 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     if (!placeholder) return;
     _placeholder = [placeholder copy];
     if (_placeholder.length > 0) {
-        _placeholderLabel.text = _placeholder;
+        self.placeholderLabel.text = _placeholder;
     }
 }
+
 - (void)setPlaceholderColor:(UIColor *)placeholderColor {
     if (!placeholderColor) return;
     _placeholderColor = placeholderColor;
-    _placeholderLabel.textColor = _placeholderColor;
+    self.placeholderLabel.textColor = _placeholderColor;
 }
+
 - (void)setPlaceholderFont:(UIFont *)placeholderFont {
     if (!placeholderFont) return;
     _placeholderFont = placeholderFont;
-    _placeholderLabel.font = _placeholderFont;
+    self.placeholderLabel.font = _placeholderFont;
 }
 
 #pragma mark - NSNotification
@@ -170,7 +185,7 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
     if (notification.object != self) return;
     
     // 根据字符数量显示或者隐藏 `placeholderLabel`
-    _placeholderLabel.hidden = [@(self.text.length) boolValue];
+    self.placeholderLabel.hidden = [@(self.text.length) boolValue];
     
     // 禁止第一个字符输入空格或者换行
     if (self.text.length == 1) {
@@ -179,15 +194,12 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
         }
     }
     
-    if (_maxLength != NSUIntegerMax && _maxLength != 0) { // 只有当maxLength字段的值不为无穷大整型也不为0时才计算限制字符数.
-        NSString *toBeString = self.text;
-        UITextRange *selectedRange = [self markedTextRange];
-        UITextPosition *position = [self positionFromPosition:selectedRange.start offset:0];
-        if (!position) {
-            if (toBeString.length > _maxLength) {
-                _maxHandler ? _maxHandler(self) : NULL; // 回调达到最大限制的Block.
-                self.text = [toBeString substringToIndex:_maxLength]; // 截取最大限制字符数.
-            }
+    // 只有当maxLength字段的值不为无穷大整型也不为0时才计算限制字符数.
+    if (_maxLength != NSUIntegerMax && _maxLength != 0 && self.text.length > 0) {
+        
+        if (!self.markedTextRange && self.text.length > _maxLength) {
+            _maxHandler ? _maxHandler(self) : NULL; // 回调达到最大限制的Block.
+            self.text = [self.text substringToIndex:_maxLength]; // 截取最大限制字符数.
         }
     }
     
