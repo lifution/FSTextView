@@ -22,7 +22,7 @@ textView.formatText; // 该属性获取到的字符串为去除首尾空格和�
 ##### 支持使用CocoaPods引入, Podfile文件中添加:
 
 ```objc
-pod 'FSTextView', '~> 1.2'
+pod 'FSTextView'
 ```
 
 注: 使用CocoaPods引入的话, 纯代码创建没有任何问题, 但在Storyboard中设置时会提示 `Fail to update auto layout status: Fail to load designables from path (null)`解决办法是在Podfile文件中添加`use_frameworks!`在`target 'YourProjectName' do`前即可, 但这个方法只能是iOS8及往后版本才行, 如果你的项目版本支持的是iOS7及之前版本的话会报错, 或者你可以找到`Pod`文件夹中`FSTextView`的源码, 删除`FSTextView.h`中的`IB_DESIGNABLE`字段（删除后就没有了Storyboard中`FSTextView`的相关属性即设置即显示的效果）.<p>
