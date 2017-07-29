@@ -1,5 +1,10 @@
 # FSTextView
 继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换, 最低支持iOS6.<p>
+
+###### 2017/07/29 更新 `version 1.4`: <p>
+
+Fix: 达到最大限制字符数后 Undo 行为导致crash.
+
 ###### 2017/07/19 更新 `version 1.3`: <p>
 
 Fix: 在 `Storyboard` 中设置 `text` 后, 字符限制没有生效和 placeholder 没有自动隐藏的问题.
