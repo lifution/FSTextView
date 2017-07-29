@@ -208,6 +208,7 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholder水�
         if (!self.markedTextRange && self.text.length > _maxLength) {
             _maxHandler ? _maxHandler(self) : NULL; // 回调达到最大限制的Block.
             self.text = [self.text substringToIndex:_maxLength]; // 截取最大限制字符数.
+            [self.undoManager removeAllActions]; // 达到最大字符数后清空所有 undoaction, 以免 undo 操作造成crash.
         }
     }
     
