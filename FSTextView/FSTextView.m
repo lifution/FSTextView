@@ -69,8 +69,13 @@ CGFloat const kFSTextViewPlaceholderHorizontalMargin = 6.0; ///< placeholderæ°´å
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
     BOOL result = [super canPerformAction:action withSender:sender];
+    
     if (result) {
-        result = _canPerformAction;
+        if (![self respondsToSelector:action]) {
+            result = NO;
+        } else {
+            result = _canPerformAction;
+        }
     }
     
     return result;
