@@ -1,28 +1,5 @@
 # FSTextView
-继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换, 最低支持iOS6.<p>
-
-###### 2017/07/29 更新 `version 1.4`: <p>
-
-Fix: 达到最大限制字符数后 Undo 行为导致crash.
-
-###### 2017/07/19 更新 `version 1.3`: <p>
-
-Fix: 在 `Storyboard` 中设置 `text` 后, 字符限制没有生效和 placeholder 没有自动隐藏的问题.
-
-新增: 添加 `canPerformAction` 属性来设定 `FSTextView` 是否允许长按弹出UIMenuController.
-
-###### 2017/04/14 更新 `version 1.2`: <p>
-
-修复 [#issue5](https://github.com/lifution/FSTextView/issues/5)<p>
-删除了原来重载的父类属性 `text` 的 `getter` 方法, 如果需要获取一个去除首尾空格和换行符的字符串则调用 `formatText` 即可. <p>
-
-```objc
-FSTextView *textView = [FSTextView textView];
-textView.formatText; // 该属性获取到的字符串为去除首尾空格和换行符的.
-```
-
-###### 2017/04/02 更新 `version 1.1`: <p>
-更换注册通知的方式, 避免影响其它的 `FSTextView` 实例.
+继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换.<p>
 
 ##### 支持使用CocoaPods引入, Podfile文件中添加:
 
@@ -57,7 +34,42 @@ textView.maxLength = 10;
 ##### 目前已知的小问题: (不影响使用, Xcode8.3 已修复了这个问题)
 在Storyboard中设置Placeholder颜色不会在Storyboard上马上呈现, 但是其实已经修改成功的了, 运行时Placeholder的颜色会是你所设置的颜色.<p>
 
-# LICENSE
+# Requirements
+
+iOS 6.0 +, Xcode 7.0 +
+
+# Version
+
+* 1.8 :
+
+  Fix: 因为 `UIMenuController` 引起的 `unrecognized selector sent to instance` 错误.
+
+*  1.4 :
+
+  Fix: 达到最大限制字符数后 Undo 行为导致crash.
+
+* 1.3 :
+
+  Fix: 在 `Storyboard` 中设置 `text` 后, 字符限制没有生效和 placeholder 没有自动隐藏的问题.
+
+  新增: 添加 `canPerformAction` 属性来设定 `FSTextView` 是否允许长按弹出UIMenuController.
+
+
+* 1.2 : 
+
+  修复 [#issue5](https://github.com/lifution/FSTextView/issues/5)<p>
+  删除了原来重载的父类属性 `text` 的 `getter` 方法, 如果需要获取一个去除首尾空格和换行符的字符串则调用 `formatText` 即可. <p>
+
+  ```objective-c
+  FSTextView *textView = [FSTextView textView];
+  textView.formatText; // 该属性获取到的字符串为去除首尾空格和换行符的.
+  ```
+
+* 1.1 :
+
+  更换注册通知的方式, 避免影响其它的 `FSTextView` 实例.
+
+# License
 FSTextView is available under the MIT license. See the LICENSE file for more info.
 
 [image-1]:http://oeysrv69b.bkt.clouddn.com/FSTextView1.jpg
