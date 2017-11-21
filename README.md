@@ -26,10 +26,10 @@ textView.maxLength = 10;
 ```
 
 竖屏状态<p>
-![Alt text][image-1]
+![竖屏状态](http://oeysrv69b.bkt.clouddn.com/FSTextView1.jpg)
 
 横屏状态<p>
-![Alt text][image-2]
+![横屏状态](http://oeysrv69b.bkt.clouddn.com/FSTextView2.jpg)
 
 ##### 目前已知的小问题: (不影响使用, Xcode8.3 已修复了这个问题)
 在Storyboard中设置Placeholder颜色不会在Storyboard上马上呈现, 但是其实已经修改成功的了, 运行时Placeholder的颜色会是你所设置的颜色.<p>
@@ -71,8 +71,5 @@ iOS 6.0 +, Xcode 7.0 +
 
 # License
 FSTextView is available under the MIT license. See the LICENSE file for more info.
-
-[image-1]:http://oeysrv69b.bkt.clouddn.com/FSTextView1.jpg
-[image-2]:http://oeysrv69b.bkt.clouddn.com/FSTextView2.jpg
 
 
