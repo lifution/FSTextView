@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0407437721972EFD0047D718 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407437621972EFD0047D718 /* RootViewController.m */; };
 		B0D793CC1D9A9CC000DCF067 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D793CB1D9A9CC000DCF067 /* main.m */; };
 		B0D793CF1D9A9CC000DCF067 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D793CE1D9A9CC000DCF067 /* AppDelegate.m */; };
 		B0D793D21D9A9CC000DCF067 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D793D11D9A9CC000DCF067 /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0407437521972EFD0047D718 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		0407437621972EFD0047D718 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		B0D793C71D9A9CC000DCF067 /* FSTextView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FSTextView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D793CB1D9A9CC000DCF067 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0D793CD1D9A9CC000DCF067 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -64,6 +67,8 @@
 				B0D793E11D9A9D6700DCF067 /* FSTextView */,
 				B0D793CD1D9A9CC000DCF067 /* AppDelegate.h */,
 				B0D793CE1D9A9CC000DCF067 /* AppDelegate.m */,
+				0407437521972EFD0047D718 /* RootViewController.h */,
+				0407437621972EFD0047D718 /* RootViewController.m */,
 				B0D793D01D9A9CC000DCF067 /* ViewController.h */,
 				B0D793D11D9A9CC000DCF067 /* ViewController.m */,
 				B0D793D31D9A9CC000DCF067 /* Main.storyboard */,
@@ -119,8 +124,9 @@
 		B0D793BF1D9A9CC000DCF067 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = FS;
 				LastUpgradeCheck = 0910;
-				ORGANIZATIONNAME = Steven;
+				ORGANIZATIONNAME = Sheng;
 				TargetAttributes = {
 					B0D793C61D9A9CC000DCF067 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -169,6 +175,7 @@
 				B0D793D21D9A9CC000DCF067 /* ViewController.m in Sources */,
 				B0D793CF1D9A9CC000DCF067 /* AppDelegate.m in Sources */,
 				B0D793CC1D9A9CC000DCF067 /* main.m in Sources */,
+				0407437721972EFD0047D718 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
