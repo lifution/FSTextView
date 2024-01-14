@@ -35,23 +35,34 @@
     [self.view addSubview:textView];
     // 限制输入最大字符数.
     textView.maxLength = 10;
-    // 弱化引用, 以免造成内存泄露.
-    __weak __typeof(&*noticeLabel)weakNoticeLabel = noticeLabel;
     // 添加输入改变Block回调.
     [textView addTextDidChangeHandler:^(FSTextView *textView) {
-        (textView.text.length < textView.maxLength) ? weakNoticeLabel.text = @"":NULL;
+        noticeLabel.hidden = (textView.text.length < textView.maxLength);
     }];
     // 添加到达最大限制Block回调.
     [textView addTextLengthDidMaxHandler:^(FSTextView *textView) {
-        weakNoticeLabel.text = [NSString stringWithFormat:@"最多限制输入%zi个字符", textView.maxLength];
+        noticeLabel.text = [NSString stringWithFormat:@"最多限制输入%zi个字符", textView.maxLength];
+        noticeLabel.hidden = NO;
     }];
     
     // constraint
     textView.translatesAutoresizingMaskIntoConstraints = NO;
     noticeLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-30-[textView]-30-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(textView)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[textView(==100)]-8-[noticeLabel]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(textView, noticeLabel)]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:noticeLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-30-[textView]-30-|"
+                                                                      options:kNilOptions
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(textView)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[textView(==100)]-8-[noticeLabel]"
+                                                                      options:kNilOptions
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(textView, noticeLabel)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:noticeLabel
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.f
+                                                           constant:0.f]];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

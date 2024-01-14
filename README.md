@@ -1,3 +1,5 @@
+> This repository has been deprecated, use [FSUIKit/FSTextView](https://github.com/lifution/FSUIKit/tree/main/Sources/Classes/Controls/FSTextView) instead.
+
 # FSTextView
 继承于UITextView的自定义TextView, 带placeholder和可限制最大输入字符数, 已适配横竖屏切换.<p>
 
